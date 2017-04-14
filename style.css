@@ -1,0 +1,22 @@
+body{
+	background:#333;
+}
+
+.gameName{
+	color:#fff;
+	font-family:Courier;
+	font-size:24px;
+	text-align:center;
+}
+
+canvas
+{
+	
+	display:block;
+	margin:30px auto 0px;
+}
+#naruto, #enemy, #stats , #razmetka, #kakasi, #rasengan, #chedori, #chakra, #sacura
+{
+	display:block;
+	margin: -600px auto 0px;
+}
