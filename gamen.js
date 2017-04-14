@@ -31,7 +31,7 @@ var ctxScch;
 var ctxStats;
 
 
-var chakraMain=75;
+var chakraMain=500;
 
 var spawnInterval;
 var spawnInterval1;
