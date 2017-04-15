@@ -19,6 +19,15 @@ var ctxKs;
 var kch;
 var ctxKch;
 
+var ss;
+var ctxSs;
+
+var ssk;
+var ctxSsk;
+
+var scch;
+var ctxScch;
+
 var Sc;
 var ctxSc;
 
@@ -50,6 +59,9 @@ var gameHeight = 600;
 
 var narutoArray=[];
 var kakashiArray=[];
+
+var sasukeArray=[];
+var katunArray=[];
 var sacuraArray=[];
 var rasenganArray=[];
 var chedoriArray=[];
@@ -58,6 +70,8 @@ var chakraArray=[];
 var n=0;
 var icon;
 var player;
+
+var health=250;
 
 var isPlaying;
 
@@ -85,9 +99,17 @@ narutoR.src = "img/rasengan.png";
 var kakasiModel = new Image();
 kakasiModel.src = "img/kakasi.png";
 
+
+
 var kakasiCh= new Image();
 kakasiCh.src = "img/chedori.png";
 
+var sasukeModel = new Image();
+sasukeModel.src = "img/sasuke.png";
+
+
+var katunModel = new Image();
+katunModel.src = "img/katun.png";
 
 var sacuraModel = new Image();
 sacuraModel.src = "img/sakuraG.png";
@@ -107,7 +129,7 @@ var  b1 =false;
 var sh=0,sh1=0;
 var naruto=false;
 var lk;
-var araayB =[[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0][0,0,0,0,0,0,0,0,0]];
+var araayB =[[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]];
 
 var x;
 
@@ -150,6 +172,12 @@ function init(){
 	scch = document.getElementById("chakra");
 	ctxScch=scch.getContext("2d");
 
+	ss = document.getElementById("sasuke");
+	ctxSs=ss.getContext("2d");
+	
+	ssk = document.getElementById("katun");
+	ctxSsk=ssk.getContext("2d");
+	
 	
 	stats = document.getElementById("stats");
 	ctxStats=stats.getContext("2d");
@@ -181,6 +209,12 @@ function init(){
 	
     nrs.width=gameWidth;
 	nrs.height=gameHeight;
+		
+	ss.width=gameWidth;
+	ss.height=gameHeight;
+	
+    ssk.width=gameWidth;
+	ssk.height=gameHeight;
 	
 	enemyCvs.width=gameWidth;
 	enemyCvs.height=gameHeight;
@@ -231,7 +265,7 @@ function mouseClick(e){
 	if (x<750&&x>30&&y>180&y<540){chakraS(x,y);}
 	if (x<750&&x>30&&y>180&y<540&&(b==0)){test(x,y);narutoPlay(sh,sh1);} else {ctxRaz.clearRect(190,70,100,100);  b=1;}
 	if (x<750&&x>30&&y>180&y<540&&(bK==0)){test(x,y);kakashiPlay(sh,sh1)} else {ctxRaz.clearRect(190,70,100,100);  bK=1;}
-	if (x<750&&x>30&&y>180&y<540&&(bS==false)){test(x,y); sacuraPlay(sh,sh1);} else {ctxRaz.clearRect(190,70,100,100);  bS=true;}
+	if (x<750&&x>30&&y>180&y<540&&(bS==false)){test(x,y); sasukePlay(sh,sh1);} else {ctxRaz.clearRect(190,70,100,100);  bS=true;}
 	if (x<750&&x>30&&y>180&y<540&&(bSc==false)){test(x,y); sacuraPlay(sh,sh1);} else {ctxRaz.clearRect(190,70,100,100);  bSc=true;}
 	if (x<750&&x>30&&y>180&y<540&&(bG==false)){test(x,y);} else {ctxRaz.clearRect(190,70,100,100);  bG=true;}
 	
@@ -261,7 +295,7 @@ function mouseClick(e){
 function chakraS(x,y){
 	for(var i=0; i<chakraArray.length; i++)
 	{
-		//console.log(chakraArray.length,chakraArray[i].drawX,chakraArray[i].drawY,x,y,chakraArray[i].drawX+chakraArray[i].width)
+	
 		if(x>=chakraArray[i].drawX&&x<=chakraArray[i].drawX+chakraArray[i].width) {chakraArray[i].destroy();chakraMain=chakraMain+25;
 		}
 	}
@@ -292,19 +326,40 @@ function test(x,y){
 
 function narutoPlay(sh,sh1){
 	
+
+if (araayB[sh][sh1]===0){
+	
 	if (chakraMain>=150){
 
 		narutoArray.push(new Naruto(40+sh1*80,200+sh*90));
 		
 	chakraMain=chakraMain-150;
-	
+araayB[sh][sh1]=1;
 
-	spawnTime=spawnTime-50;}
+spawnTime=spawnTime-50;}}
 
 }
 
+
+function sasukePlay(sh,sh1){
+	
+	if (araayB[sh][sh1]===0){
+		if (chakraMain>=100){	
+	
+
+		sasukeArray.push(new Sasuke(20+sh1*80,200+sh*90));
+	
+		
+	chakraMain=chakraMain-100;
+	
+araayB[sh][sh1]=1;
+	spawnTime=spawnTime-50;}}
+}
+
 function kakashiPlay(sh,sh1){
-if (chakraMain>=150){	
+	
+	if (araayB[sh][sh1]===0){
+		if (chakraMain>=150){	
 	
 
 		kakashiArray.push(new Kakasi(20+sh1*80,200+sh*90));
@@ -312,17 +367,22 @@ if (chakraMain>=150){
 		
 	chakraMain=chakraMain-150;
 	
-
-	spawnTime=spawnTime-50;}
+araayB[sh][sh1]=1;
+	spawnTime=spawnTime-50;}}
 }
 
 function sacuraPlay(sh,sh1){
 	
+if (araayB[sh][sh1]===0){
+		if (chakraMain>=50){	
 	
 
 		sacuraArray.push(new Sacura(20+sh1*80,200+sh*90));
+		
+	chakraMain=chakraMain-50;
 	
-spawnTime=spawnTime-25;
+araayB[sh][sh1]=1;
+spawnTime=spawnTime-25;}}
 	
 }
 
@@ -427,8 +487,8 @@ Naruto.prototype.draw = function()
 Naruto.prototype.update = function()
 {    
 
-	console.log(this.drawX,this.drawY);
-         if (this.srcX<350&&this.srcX>250) {console.log(this.drawX,this.drawY);rasenganPlay(this.drawX,this.drawY);}
+	
+         if (this.srcX<350&&this.srcX>250) {rasenganPlay(this.drawX,this.drawY);}
 	
 	 if (this.srcX<350) this.srcX += 72; else this.srcX =350;
 	
@@ -492,6 +552,16 @@ function draw()
 		chakraArray[i].draw();
 		
 	}	
+			   for(var i = 0; i <sasukeArray.length; i++)
+	{
+		sasukeArray[i].draw();
+		
+	}	
+		   for(var i = 0; i <katunArray.length; i++)
+	{
+		katunArray[i].draw();
+		
+	}		
 	
 	
 }
@@ -541,8 +611,16 @@ function update(){
 		chakraArray[i].update();
 		
 	}	
-	
-	
+			   for(var i = 0; i <sasukeArray.length; i++)
+	{
+		sasukeArray[i].update();
+		
+	}	
+		   for(var i = 0; i <katunArray.length; i++)
+	{
+		katunArray[i].update();
+		
+	}		
 }
 
 
@@ -552,7 +630,7 @@ function loop()
 	{
 		 draw();
 		 update();
-	
+	     console.log(rasenganArray.length);
 		
 		 setTimeout(function() {
          requestAnimationFrame(loop);
@@ -571,13 +649,51 @@ startCreatingEnemies();
  startCreatingChakra();
 	startResengan();
 	startChedori();
+		startkatun();
 }
 
 function stopLoop()
 {
 	isPlaying= false;
 }
+function Sasuke(dx,dy)
+{
+	this.srcX = 10;
+	this.srcY = 0;
+	this.drawX = dx;
+	this.drawY = dy-10;
+	this.width = 60;
+	this.height =70;
+	
+	
+	
+	
+	this.speed = 3;
+}
 
+Sasuke.prototype.draw = function()
+{
+	clearSasuke( this.drawX,this.drawY,this.width,this.height);
+
+	ctxSs.drawImage(sasukeModel,this.srcX,this.srcY,this.width,this.height,
+					       this.drawX,this.drawY,this.width,this.height);
+}
+
+Sasuke.prototype.update = function()
+{   
+	 if (this.srcX<400&&this.srcX>350) {katunPlay(this.drawX,this.drawY);}
+	  
+	 if (this.srcX<350) this.srcX += 60; else this.srcX =0;
+	
+	
+
+}
+
+function clearSasuke(x,y,x1,y1)
+{
+	ctxSs.clearRect(x,y,x1,y1);
+
+}
 
 function Kakasi(dx,dy)
 {
@@ -604,8 +720,8 @@ Kakasi.prototype.draw = function()
 
 Kakasi.prototype.update = function()
 {   
-	 if (this.srcX<1900&&this.srcX>1700) {console.log("wqeqwewq");chedoriPlay(this.drawX,this.drawY);}
-	  // if (this.srcX<350&&this.srcX>250) {console.log(this.drawX,this.drawY);rasenganPlay(this.drawX,this.drawY);}
+	 if (this.srcX<1900&&this.srcX>1700) {chedoriPlay(this.drawX,this.drawY);}
+	  
 	 if (this.srcX<1800) this.srcX += 100; else this.srcX =1900;
 	
 	
@@ -664,7 +780,7 @@ function clearNaruto(x,y,x1,y1)
 
 function Rasengan(dx,dy)
 {
-	//console.log(dx,dy);
+
 	this.srcX = 0;
 	this.srcY = 0;
 	this.drawX = dx+60;
@@ -673,7 +789,7 @@ function Rasengan(dx,dy)
 	this.height =30;
 	
 	
-	//console.log(dx,dy);
+	
 	
 	this.speed = 3;
 }
@@ -689,6 +805,11 @@ Rasengan.prototype.update = function()
 {    
 	 
 	 this.drawX+=5;
+	 	if(this.drawX+this.width>800)
+	{
+		this.destroy();
+	}
+	
 
 
 }
@@ -720,7 +841,7 @@ function clearNarutoR(x,y,x1,y1)
 
 function Chedori(dx,dy)
 {
-	//console.log(dx,dy);
+	
 	this.srcX = 0;
 	this.srcY = 0;
 	this.drawX = dx+60;
@@ -729,7 +850,7 @@ function Chedori(dx,dy)
 	this.height =30;
 	
 	
-	//console.log(dx,dy);
+	
 	
 	this.speed = 3;
 }
@@ -745,6 +866,10 @@ Chedori.prototype.update = function()
 {    
 	
 	 this.drawX+=5;
+		 	if(this.drawX+this.width>800)
+	{
+		this.destroy();
+	}
 	
 	
 
@@ -807,20 +932,29 @@ Enemy.prototype.update = function()
 	for(var i=0; i<rasenganArray.length; i++)
 	{
 		
-		if(this.drawX<=rasenganArray[i].drawX&&this.drawX<=rasenganArray[i].drawX+rasenganArray[i].width&&this.drawY<=rasenganArray[i].drawY&&this.drawY<=rasenganArray[i].drawY+rasenganArray[i].height) {this.destroy();rasenganArray[i].destroy();ddd=i;}
+		if(this.drawX>=rasenganArray[i].drawX&&this.drawX<=rasenganArray[i].drawX+rasenganArray[i].width&&this.drawY<=rasenganArray[i].drawY&&this.drawY<=rasenganArray[i].drawY+rasenganArray[i].height) {this.destroy();rasenganArray[i].destroy();ddd=i;}
 	}
 	
 	  for(var i=0; i<chedoriArray.length; i++)
 	{
 		
-		if(this.drawX<=chedoriArray[i].drawX&&this.drawX<=chedoriArray[i].drawX+chedoriArray[i].width&&this.drawY-10<=chedoriArray[i].drawY&&this.drawY<=chedoriArray[i].drawY+chedoriArray[i].height) {this.destroy();chedoriArray[i].destroy();ddd=i;}
+		if(this.drawX>=chedoriArray[i].drawX&&this.drawX<=chedoriArray[i].drawX+chedoriArray[i].width&&this.drawY-10<=chedoriArray[i].drawY&&this.drawY<=chedoriArray[i].drawY+chedoriArray[i].height) {this.destroy();chedoriArray[i].destroy();ddd=i;}
 	}
+	
+		
+	  for(var i=0; i<katunArray.length; i++)
+	{
+		
+		if(this.drawX>=katunArray[i].drawX&&this.drawX<=katunArray[i].drawX+katunArray[i].width&&this.drawY-10<=katunArray[i].drawY&&this.drawY<=katunArray[i].drawY+katunArray[i].height) {this.destroy();katunArray[i].destroy();ddd=i;}
+	}
+	
 	
 	
 		
 	if(this.drawX+this.width<0)
 	{
 		this.destroy();
+		health=health-1;
 	}
 	
 	
@@ -840,7 +974,7 @@ function clearCtxEnemy(x,y,x1,y1)
 
 Enemy.prototype.destroy = function()
 {
-	console.log(2321);
+
 	enemies.splice(enemies.indexOf(this),1);
 	 clearCtxEnemy( this.drawX,this.drawY,this.width,this.height);
 	
@@ -862,7 +996,7 @@ function spawnEnemy()
 {
 	let y=  Math.floor(Math.random() * (2 - 0 + 1)) + 0;
 ;
-	console.log(y);
+	
 				enemies.push(new Enemy(y));
 	
 }
@@ -871,7 +1005,7 @@ function spawnEnemy()
 function startCreatingEnemies()
 {
 	//stopCreatingEnemies();	console.log(spawnTime);
-	spawnInterval= setInterval(function(){spawnEnemy()},spawnTime); console.log(123);
+	spawnInterval= setInterval(function(){spawnEnemy()},3000); 
 }
 
 
@@ -883,7 +1017,7 @@ function stopCreatingEnemies()
 
 function Chakra(dx,dy)
 {
-	//console.log(dx,dy);
+	
 	this.srcX = 0;
 	this.srcY = 0;
 	this.drawX = dx;
@@ -892,7 +1026,7 @@ function Chakra(dx,dy)
 	this.height =50;
 	
 	
-	//console.log(dx,dy);
+
 	
 	this.speed = 3;
 }
@@ -945,8 +1079,8 @@ function clearChakra(x,y,x1,y1)
 
 function startCreatingChakra()
 {
-	console.log(spawnTime);
-	spawnInterval1= setInterval(function(){ChakraPlay()},spawnTime); console.log(1111123);
+	
+	spawnInterval1= setInterval(function(){ChakraPlay()},spawnTime); 
 }
 
 function startResengan()
@@ -955,7 +1089,7 @@ function startResengan()
 	spawnInterval1= setInterval(function(){   for(var i = 0; i <narutoArray.length; i++)
 	{
 		narutoArray[i].srcX=0;
-}	},10000); console.log(1111123);
+}	},10000); 
 }
 
 function startChedori()
@@ -964,7 +1098,7 @@ function startChedori()
 	spawnInterval1= setInterval(function(){   for(var i = 0; i<kakashiArray.length; i++)
 	{
 		kakashiArray[i].srcX=0;
-}	},10000); console.log(1111123);
+}	},9000); 
 }
 
 
@@ -973,4 +1107,81 @@ function updateStats()
 	
 	ctxStats.clearRect(0,0,gameWidth,gameHeight);
 	ctxStats.fillText(chakraMain,95,80);
+	ctxStats.fillStyle="red";
+	ctxStats.fillRect(400,30,health,30);
+
+	
 }
+
+function Katun(dx,dy)
+{
+	
+	this.srcX = 0;
+	this.srcY = 0;
+	this.drawX = dx+60;
+	this.drawY = dy+35;
+	this.width = 40;
+	this.height =30;
+	
+	
+	
+	
+	this.speed = 3;
+}
+
+Katun.prototype.draw = function()
+{
+    clearsasukeCh(this.drawX,this.drawY,this.width,this.height);
+	ctxSsk.drawImage(katunModel,this.srcX,this.srcY,this.width,this.height,
+					       this.drawX,this.drawY,this.width,this.height);
+}
+
+Katun.prototype.update = function()
+{    
+	
+	 this.drawX+=5;
+		 	if(this.drawX+this.width>800)
+	{
+		this.destroy();
+	}
+	
+	
+
+}
+
+Katun.prototype.destroy = function()
+{
+	
+	katunArray.splice(katunArray.indexOf(this),1);
+	clearsasukeCh(this.drawX,this.drawY,this.width,this.height);
+	
+}
+
+function katunPlay(x,y){
+	
+	
+
+		katunArray.push(new Katun(x,y-20));
+	
+
+
+
+}
+
+function clearsasukeCh(x,y,x1,y1)
+{
+	ctxSsk.clearRect(x,y,x1,y1);
+
+}
+
+
+function startkatun()
+{
+
+	spawnInterval1= setInterval(function(){   for(var i = 0; i<sasukeArray.length; i++)
+	{
+		sasukeArray[i].srcX=0;
+}	},6000); 
+}
+
+
