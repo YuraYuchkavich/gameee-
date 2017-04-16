@@ -20,3 +20,31 @@ canvas
 	display:block;
 	margin: -600px auto 0px;
 }
+img{
+	position :relative;
+}
+
+#drawBtn{
+	position:absolute;
+	left:46%;
+	top:50%;
+	width:150px;
+	height:40px;
+	
+}
+
+#clearBtn{
+	position:absolute;
+	left:46%;
+	top:65%;
+	width:150px;
+	height:40px;
+}
+
+#Btn{
+	position:absolute;
+	left:1%;
+	top:1%;
+	width:100px;
+	height:40px;
+}
